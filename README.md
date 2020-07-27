@@ -1,3 +1,10 @@
+-[React](#react)
+-[Pure Function](#pure_function) 
+-[Redux Thunk](#redux_thunk)
+
+
+<a name="react"></a>
+
 # React
 ##Дисклеймер
 Всё, что написано далее написано мною лично.
@@ -1481,7 +1488,7 @@ componentDidMount() {
 
 ![1565951914995](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565951914995.png)
 
-
+<a name="redux_thunk"></a>
 
 ## Redux-Thunk
 
@@ -2305,6 +2312,7 @@ React.createElement("div");
 Именно для этого мы и должны использовать key. Чтобы реакт при сравнении элементов смотрел на их уникальные ключи и перерисовывал всё правильно.
 
 
+<a name="pure_function"></a>
 
 ## Pure Function
 
