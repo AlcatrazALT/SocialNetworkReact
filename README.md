@@ -1,21 +1,34 @@
-* [React](#react)
-* [Component](#component)
-
-
-
-* [Redux Thunk](#redux_thunk)
-* [Pure Function](#pure_function) 
-
-<a name="react"></a>
-
-# React
-##Дисклеймер
-Всё, что написано далее написано мною лично.
-Я постарался донести всю информацию максимально
-понятным языком. Делал я это в первую очередь
-для себя, чтобы лучше усвоить информацию, так что 
-в некоторых моментах я писал вещи понятные только
-мне.
+- [Component](#component)
+- [SPA](#spa)
+- [Props](#props)
+- [React-Router-Dom](#rrd)
+- [map()](#map)
+- [onClick](#onclick)
+- [CallBack](#callback)
+- [ref](#ref)
+- [VirtualDOM](#vdom)
+- [FLUX](#flux)
+- [bind()](#bind)
+- [Redux](#redux)
+- [React Redux](#react_redux)
+- [Container Component](#container_component)
+- [deep copy](#deep_copy)
+- [jQuery](#jquery)
+- [Promise](#promise)
+- [axios](#axios)
+- [withRouter](#with_router)
+- [Redux Thunk](#redux_thunk)
+- [Redirect](#redirect)
+- [High Order Component](#hoc)
+- [Redux_Form](#redux_form)
+- [Composition](#composition)
+- [Destructurization](#destructurization)
+- [Reselect](#reselect)
+- [Selector](#selector)
+- [DOM](#dom)
+- [Babel](#babel)
+- [Reconciliation](#reconciliation)
+- [Pure Function](#pure_function) 
 
 <a name="component"></a>
 
@@ -24,7 +37,7 @@
 **Компонента** - это функция, которая возвращает JSX разметку. Т.е HTML внутри JS.
 Компоненту никогда не вызывают, Компонента - это ТЕГ.
 
-<a name="component"></a>
+<a name="spa"></a>
 
 ## SPA
 
@@ -33,6 +46,8 @@
 
 
 ![1562585643793](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1562585643793.png)
+
+<a name="props"></a>
 
 ## Пропсы
 
@@ -50,9 +65,11 @@ props {
 }
 ```
 
+<a name="rrd"></a>
+
 ## Модуль **react-router-dom** 
 
-позволяет использовать **route** (изначально всё нужно обвернуть в один блок под названием **BrowserRouter**. Он позволяет отрисовывать компоненты, отслеживания их url (
+позволяет использовать **route** (изначально всё нужно обвернуть в один блок под названием **BrowserRouter**. Он позволяет отрисовывать компоненты, отслеживать их url (
     ```react
     <Route path='/profile' component={Profile} />
     ```
@@ -71,6 +88,8 @@ props {
 
 **BLL (Business Logic Layer) - REDUX**
 **UI (User Interface) - REACT**
+
+<a name="map"></a>
 
 ## Метод для массива MAP
 
@@ -92,11 +111,7 @@ let dialogsElement = dialogsData
     .map(d => <DialogItem name={d.name} id={d.id} />);
 ```
 
-
-
-# onClick, ref, VirtualDOM
-
-
+<a name="onclick"></a>
 
 ### OnClick
 
@@ -107,6 +122,8 @@ let dialogsElement = dialogsData
 ```
 
 Значением этого атрибута может служить анонимная функция, либо же **CallBack** функция.
+
+<a name="callback"></a>
 
 ### CallBack
 
@@ -129,6 +146,8 @@ let dialogsElement = dialogsData
 ```
 
 ***БЕЗ СКОБОК!!!***
+
+<a name="ref"></a>
 
 ### ref
 
@@ -156,73 +175,13 @@ let newPostElement = React.createRef();
 let text = newPostElement.current.value;
 ```
 
+<a name="vdom"></a>
+
 ### VirtualDOM
 
 **React** работает с **VirtualDOM**. Он подгружает компоненты <u>постепенно</u> в **DOM**, а поэтому *мы не можем знать существует ли данный элемент, к которому мы обращаемся, в DOM.*
 
-
-
-
-
-## ReRender
-
-![1562938967001](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1562938967001.png)
-
-**Файл render.js:**
-
-```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import {addPost} from './redux/state';
-import {BrowserRouter} from 'react-router-dom';
-
-export let reRenderEntireTree = (state) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <App state={state} addPost={addPost} />
-    </BrowserRouter>, document.getElementById('root'));
-}
-```
-
-**Файл state.js:**
-
-```javascript
-import {reRenderEntireTree} from "../render";
-
-let state = {...}
-
-export let addPost = (postMessage) => {
-  let newPost = {
-    id: 3,
-    message: postMessage,
-  };
-  state.profile.postsData.push(newPost);
-  reRenderEntireTree(state);
-}
-
-export default state;
-```
-
-**Файл index.js:**
-
-```javascript
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import {reRenderEntireTree} from "./render";
-import state from './redux/state';
-
-
-
-reRenderEntireTree(state);
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
-
-```
+<a name="flux"></a>
 
 ## FLUX Концепция/Архитектура
 
@@ -236,158 +195,9 @@ P.S,
 
 **state inside props** - *новые данные stat'a передаваемые в UI с помощью пропсов*
 
-
-
 **Инкапсулировать детали** - скрыть детали/скрыть логику
 
-## Store
-
-Псевдо ООП
-
-```javascript
-import profileReducer from "./profile-reducer";
-import messagesReducer from "./messages-reducer";
-import friendsReducer from "./friends-reducer";
-let store = {
-  _state: {
-    profile: {
-      postsData: [
-        { id: 1, message: 'Hi, how are you' },
-        { id: 2, message: 'Its my first post' }
-      ],
-      newPostText : ''
-    },
-    messages: {
-      dialogsData: [
-        { id: 1, name: 'Dima' },
-        { id: 2, name: 'Julia' },
-        { id: 3, name: 'Victor' },
-        { id: 4, name: 'Sasha' }
-      ],
-      messagesData: [
-        { id: 1, message: 'Hello' },
-        { id: 2, message: 'Privet' },
-        { id: 3, message: 'Aloha' }
-      ],
-      newMessageText : ''
-    },
-    friends: {
-      friendsData: [
-        { id: 1, name: 'Dima' },
-        { id: 2, name: 'Julia' },
-        { id: 3, name: 'Victor' }
-      ]
-    }
-  },
-  _callSubscriber() {
-    console.log("state changed")
-  },
-
-  getState() {
-    return this._state;
-  },
-  subscribe(observer) {
-    this._callSubscriber = observer;
-  },
-
-  dispatch(action) { //action === actionCreator (EX. addPostActionCreator)
-
-    this._state.profile = profileReducer(this._state.profile, action);
-    this._state.messages = messagesReducer(this._state.messages, action);
-    this._state.friends = friendsReducer(this._state.friends, action);
-
-    this._callSubscriber(this._state);
-  }
-}
-
-export default store;
-
-window.store = store;
-```
-
-## Перерисовка
-
-Файл index.js
-
-```javascript
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import store from './redux/redux-store';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import {BrowserRouter} from 'react-router-dom';
-let reRenderEntireTree = (state) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
-    </BrowserRouter>, document.getElementById('root'));
-}
-
-reRenderEntireTree(store.getState());
-store.subscribe(() => {
-  let state = store.getState();
-  reRenderEntireTree(state);
-});
-```
-
-**reRenderEntireTree** - Функция, которая рисует ui с помощью ReactDOM.render.
-
-В этом же файле мы её вызываем, чтобы при первом запуске страницы увидеть ui
-
-```javascript
-reRenderEntireTree(store.getState());
-```
-
-**НО**, UI должен перерисовываться каждый раз, когда он изменяется. Для этого мы обращаемся к функции **subscribe** через **store**. И передаём ей в качестве параметра **reRenderEntireTree** со state в параметре.
-
-```javascript
-store.subscribe(() => {
-  let state = store.getState();
-  reRenderEntireTree(state);
-});
-```
-
-Функция **subscribe** имеет параметр observer, который по выполнению функции должен стать равным другой пустой функции **callSubscriber** которая в свою очередь уже не становится пустой.
-
-```javascript
-subscribe(observer) {
-    this._callSubscriber = observer;
-  },
-```
-
-Было:
-
-```javascript
-_callSubscriber() {
-    console.log("state changed")
-  }
-```
-
-Стало:
-
-```javascript
-_callSubscriber() {
-    let state = store.getState();
-  	reRenderEntireTree(state);
-  }
-```
-
-Как только (например по нажатию кнопки) в dispatch приходит action происходит вызов callSubscriber (отсюда и название функции)
-
-```javascript
-dispatch(action) { //action === actionCreator (EX. addPostActionCreator)
-
-    this._state.profile = profileReducer(this._state.profile, action);
-    this._state.messages = messagesReducer(this._state.messages, action);
-    this._state.friends = friendsReducer(this._state.friends, action);
-
-    this._callSubscriber(this._state);
-  }
-```
-
-Происходит перерисовка UI.
+<a name="bind"></a>
 
 # Bind()
 
@@ -435,9 +245,9 @@ props.addPost()
 addPost={store.addPost.bind(store)
 ```
 
+<a name="redux"></a>
 
-
-## Dispatch, Action, ActionCreator, Reducer
+### Redux
 
 **dispatch** - это метод(функция), который передаёт action(действие) в reducer.
 
@@ -499,7 +309,7 @@ let initialState = {
 
 ![1564063093206](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1564063093206.png)
 
-## Redux
+## createStore
 
 ```javascript
 let store = createStore(reducers);
@@ -507,7 +317,7 @@ let store = createStore(reducers);
 
 **createStore** - это функция, которая принимает в качестве параметра **reducer** и создаёт **store**
 
-Либо комплект редьюсоров
+Либо reducers
 
 ```javascript
 let reducers = combineReducers({
@@ -517,17 +327,10 @@ let reducers = combineReducers({
 });
 ```
 
-Функция **combineReducers** принимает в качестве параметра объект **state** : **reducer**. *State* в данном случае будет служить родительским объектом **initialState**. Другими словами **initialState** - это **state**, который мы указывает в виде ключа в **combineReducers**. Каждый *reducer* будет работать с отдельными *state*. **profileReducer** будет изменять **profile**, **messagesReducer** - **messages** и т.д. 
-
-Как это было в самописном store:
-
-```javascript
-this._state.profile = profileReducer(this._state.profile, action);
-this._state.messages = messagesReducer(this._state.messages, action);
-this._state.friends = friendsReducer(this._state.friends, action);
-```
-
-Как это в Redux:
+**combineReducers** - принимает объект **state** : **reducer**. *State* в данном случае будет служить родительским объектом **initialState**.
+**initialState** - это **state**, который мы указывает в виде ключа в **combineReducers**.
+Каждый *reducer* будет работать с отдельными *state*.
+**profileReducer** будет изменять **profile**, **messagesReducer** - **messages** и т.д. 
 
 ```javascript
 let reducers = combineReducers({
@@ -537,215 +340,15 @@ let reducers = combineReducers({
 });
 ```
 
-## Container Component
+<a name="react_redux"></a>
 
-Мы используем Контейнерную компоненту, чтобы презентационная компонента не имела связи со Store. Все данные из store будут приходить сначала в оболочку - контейнерную компоненту. Далее эта компонента отрисовывает презентационную компоненту и передаёт ей все данные через props.
-
-**Container Component**
-
-```javascript
-import React from 'react';
-import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/messages-reducer';
-import Dialogs from './Dialogs';
-
-
-const DialogsContainer = (props) => {
-
-  let state = props.store.getState();
-
-  let sendMessage = () => {
-    props.store.dispatch(sendMessageActionCreator());
-  }
-
-  let onMessageChange = (text) => {
-    props.store.dispatch(updateNewMessageTextActionCreator(text));
-  }
-  
-  return (
-    <Dialogs 
-      sendMessage={sendMessage}
-      onMessageChange={onMessageChange}
-      dialogsData={state.messages.dialogsData}
-      messagesData={state.messages.messagesData}
-      newMessageText={state.messages.newMessageText}
-    />
-  );
-}
-
-export default DialogsContainer;
-```
-
-Component (Presentation)
-
-```javascript
-import React from 'react';
-import s from './Dialogs.module.scss';
-import DialogItem from './DialogItem/DialogItem';
-import Message from './Message/Message';
-
-const Dialogs = (props) => {
-  let dialogsElement = props.dialogsData
-    .map(d => <DialogItem name={d.name} id={d.id} />);
-
-  let messagesElement = props.messagesData
-    .map(m => <Message message={m.message} id={m.id} />);
-
-  let newMessageElement = React.createRef();
-
-  let onSendMessage = () => {
-    props.sendMessage();
-  }
-
-  let onMessageChange = () => {
-    let text = newMessageElement.current.value;
-    props.onMessageChange(text);  
-  }
-  
-  return (
-    <div className={s.dialogs}>
-      <div className={s.dialogs_items}>
-        {dialogsElement}
-      </div>
-      <div className={s.messages}>
-        {messagesElement}
-        <div className={s.inputArea}>
-          <textarea
-            onChange={onMessageChange} 
-            ref={newMessageElement} 
-            value={props.newMessageText}
-            placeholder="Введите сообщение"
-          />
-          <button onClick={onSendMessage}>Send</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Dialogs;
-```
 ## REACT-REDUX
 
 React-redux это библиотека, позволяющая react работать с redux инкапсулируя все детали.
 
-*Давайте вспомним как мы жили раньше, до этой библиотеки.*
-
-**Context API**
-
-Как это было раньше. Мы использовали функцию reRenderEntireTree. Вызывали её в index.js во время старта и также передавали её как callback subscribe'у если требовалось отрисовать дерево заново, если изменялся state. 
-
-**Index.js**
-
-```javascript
-import './index.css';
-import * as serviceWorker from './serviceWorker';
-import store from './redux/redux-store';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from './StoreContext';
-let reRenderEntireTree = (state) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <App state={store.getState()}  />
-      </Provider>
-    </BrowserRouter>, document.getElementById('root'));
-}
-
-reRenderEntireTree(store.getState());
-store.subscribe(() => {
-  let state = store.getState();
-  reRenderEntireTree(state);
-});
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
-
-```
-
-Также мы использовали файл StoreContext для работы с ContextAPI. Мы создавали собственную компоненту Provider внутрь которой передавали store через value с помощью ContextAPI.
-
-И использовали компоненту Provider внутри index.js
-
-Это позволяло давать доступ контейнерным компонентам к store без необходимости прокидывать его через props.
-
-**StoreContext.js**
-
-```javascript
-import React from 'react';
-
-const StoreContext = React.createContext(null);
-
-export const Provider = (props) => {
-  return (
-    <StoreContext.Provider value={props.store}>
-      {props.children}
-    </StoreContext.Provider>
-  );
-}
-
-export default StoreContext;
-```
-
-**ContainerComponent**
-
-При создании контейнерной компоненты нам приходилось возвращать разметку внутри StoreContext.Consumer'a. Там же нам приходилось получать state через getState() и dispatch'и. Чтобы всё это передать в презентационную компоненту через пропсы.
-
-**DialogsContainer.js**
-
-```javascript
-import React from 'react';
-import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/messages-reducer';
-import Dialogs from './Dialogs';
-import StoreContext from '../../StoreContext';
-
-
-const DialogsContainer = (props) => {
-  return (
-    <StoreContext.Consumer > 
-    {
-      (store) => {
-        let state = store.getState();
-
-        let sendMessage = () => {
-          store.dispatch(sendMessageActionCreator());
-        }
-
-        let onMessageChange = (text) => {
-          store.dispatch(updateNewMessageTextActionCreator(text));
-        }
-        return (
-          <Dialogs
-            sendMessage={sendMessage}
-            onMessageChange={onMessageChange}
-            dialogsData={state.messages.dialogsData}
-            messagesData={state.messages.messagesData}
-            newMessageText={state.messages.newMessageText}
-          />
-        )
-      }
-    }
-    </StoreContext.Consumer>
-  );
-}
-
-export default DialogsContainer;
-```
-
-**Давайте же взглянем, как проста стала жизнь!**
-
 **ContextAPI**
 
-1) Удаляем файл StoreContext.js. Он нам больше не нужен.
-
-2)  Удаляем функцию reRenderEntireTree в index.js! Она нам также больше не нужна.
-
-3) Компоненту Provider оставляем, но импортируем её уже не через StoreContext, а через react-redux.
+Компоненту Provider импортируем через react-redux.
 
 ```javascript
 import './index.css';
@@ -775,15 +378,11 @@ serviceWorker.unregister();
 
 **ContainerComponent**
 
-Создание контейнерным компонент ещё не было настолько простым!
+Создание контейнерных компонент
 
 1) const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
 
-Одна строчка и компонента создана. 
-
-Функция connect, импортированная из react-redux, что она делает?
-
-Во-первых, как мы помним, мы удалили функцию reRenderEntireTree для перерисовки и отрисовки дерева. Connect делает всё это сам. **И делает намного лучше!** Он не перерисовывает всё дерево при изменении в одной компоненте, он перерисовывает **только эту компоненту**. 
+**connect** не перерисовывает всё дерево при изменении в одной компоненте, он перерисовывает **только эту компоненту**. 
 
 Во-вторых, она обеспечивает самый простой способ передачи state и dispatch в презентационную компоненту.
 
@@ -792,7 +391,6 @@ serviceWorker.unregister();
 **mapStateToProps** принимает **state** и возвращает объект ключ-значение в ЗНАЧЕНИИ атрибут-данные.
 
 Проще показать на примере:
-
 Это
 
 ```html
@@ -884,9 +482,109 @@ export default UsersContainer;
 
 # 
 
-# deep copy vs shallow copy
+<a name="container_component"></a>
 
-Пойми одно, это БАЗА. База, которую ты должен знать.
+## Container Component
+
+Мы используем Контейнерную компоненту, чтобы презентационная компонента не имела связи со Store. Все данные из store будут приходить сначала в оболочку - контейнерную компоненту. Далее эта компонента отрисовывает презентационную компоненту и передаёт ей все данные через props.
+
+**Container Component**
+
+```javascript
+import React from 'react';
+import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../redux/messages-reducer';
+import Dialogs from './Dialogs';
+
+
+const DialogsContainer = (props) => {
+
+  let state = props.store.getState();
+
+  let sendMessage = () => {
+    props.store.dispatch(sendMessageActionCreator());
+  }
+
+  let onMessageChange = (text) => {
+    props.store.dispatch(updateNewMessageTextActionCreator(text));
+  }
+  
+  return (
+    <Dialogs 
+      sendMessage={sendMessage}
+      onMessageChange={onMessageChange}
+      dialogsData={state.messages.dialogsData}
+      messagesData={state.messages.messagesData}
+      newMessageText={state.messages.newMessageText}
+    />
+  );
+}
+
+export default DialogsContainer;
+```
+
+Component (Presentation)
+
+```javascript
+import React from 'react';
+import s from './Dialogs.module.scss';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+
+const Dialogs = (props) => {
+  let dialogsElement = props.dialogsData
+    .map(d => <DialogItem name={d.name} id={d.id} />);
+
+  let messagesElement = props.messagesData
+    .map(m => <Message message={m.message} id={m.id} />);
+
+  let newMessageElement = React.createRef();
+
+  let onSendMessage = () => {
+    props.sendMessage();
+  }
+
+  let onMessageChange = () => {
+    let text = newMessageElement.current.value;
+    props.onMessageChange(text);  
+  }
+  
+  return (
+    <div className={s.dialogs}>
+      <div className={s.dialogs_items}>
+        {dialogsElement}
+      </div>
+      <div className={s.messages}>
+        {messagesElement}
+        <div className={s.inputArea}>
+          <textarea
+            onChange={onMessageChange} 
+            ref={newMessageElement} 
+            value={props.newMessageText}
+            placeholder="Введите сообщение"
+          />
+          <button onClick={onSendMessage}>Send</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Dialogs;
+```
+
+<a name="deep_copy"></a>
+
+## deep copy vs shallow copy
+
+**ВАЖНО**
+
+**Два объекта НИКОГДА не будут равны, даже если значения внутри них полностью совпадают.**
+
+**При сравнении примитивов a.name === b.name будут сравниваться именно их значения**
+
+**При сравнении двух ссылок, (без копирования, просто let b = a). Ссылки будут равны, ибо они ссылаются на один и тот же объект.**
+
+**При сравнении примитивов внутри ссылок a.classrom.teacher.name === bclassrom.teacher.name будут сравниваться значения примитивов.**
 
 Создадим объект а
 
@@ -944,7 +642,7 @@ classrom: {
 
 Ключ classrom является ссылкой на teacher. teacher же является ссылкой на объект, в котором хранятся примитивы name и age.
 
-Почему я называю их ссылками? Всё очень просто. Все объекты, как бы хранящиеся внутри другого объекта на самом деле лежат независимо друг от друга. Они принадлежат разным секторам памяти. Именно поэтому, мы можем использовать их ссылаясь на них.
+Всё очень просто. Все объекты, как бы хранящиеся внутри другого объекта на самом деле лежат независимо друг от друга. Они принадлежат разным секторам памяти. Именно поэтому, мы можем использовать их ссылаясь на них.
 
 Всё очень наглядно можно показать на примере.
 
@@ -1024,23 +722,15 @@ b.students = [...a.students]
 
 Это можно делать до бесконечной вложенности.
 
-**ВАЖНО**
-
-**Два объекта НИКОГДА не будут равны, даже если значения внутри них полностью совпадают.**
-
-**При сравнении примитивов a.name === b.name будут сравниваться именно их значения**
-
-**При сравнении двух ссылок, (без копирования, просто let b = a). Ссылки будут равны, ибо они ссылаются на один и тот же объект.**
-
-**При сравнении примитивов внутри ссылок a.classrom.teacher.name === bclassrom.teacher.name будут сравниваться значения примитивов.**
+<a name="jquery"></a>
 
 ## Axios, jQuery Ajax
 
 **jQuery**
 
-Что такое промис? Помню себя, понять не мог ничего. Смотрел уроки... Обещание, это обещание говорили они. Я не понимал НИХЕРА. Что за обещание. Мы о чём. Но вот настал момент когда и я понял что это такое.
+<a name="promise"></a>
 
-Давайте по бумажке, promise  - это обещание, которое даёт dal - ui, что возьмёт с сервера данные, взяв их оттуда, он передаёт их в виде того обещания, что он дал ранее. 
+**Promise**  - это обещание, которое даёт dal - ui, что возьмёт с сервера данные, взяв их оттуда, он передаёт их в виде того обещания, что он дал ранее. 
 
 ![1564427302517](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1564427302517.png)
 
@@ -1079,9 +769,9 @@ $.ajax(url, {settings})
 
 settings  имеют вид ключ-значение. Самое основное success. Как это звучит:
 
-*Как только придёт УСПЕШНЫЙ ответ с сервера выполниться это...*
+*Как только придёт УСПЕШНЫЙ ответ с сервера выполнится это...*
 
-success'у можно передать callback функцию
+в success можно передать callback функцию
 
 ```javascript
 const promise = $.ajax(`https://api.unsplash.com/photos/random/?client_id=818fcd1d1047300379afae3e5c33cb9cd88b68d7d81253632ba4e09a331246a5&count=30`, {
@@ -1116,13 +806,15 @@ https://website/api/tasks?taskId=123&title=text
 
 То есть сначала идёт endpoint, затем ставится вопросительный знак(?) и передаются параметры:
 
-хттпс://website/?параметр=значение
+https://website/?key=value
 
 Если этих параметров несколько, то после каждого значения нужно ставить амперсант (&)
 
 параметр=значение&параметр2=значение2
 
 При использовании POST и PUT запросов нужно использовать тело запроса **request payload**
+
+<a name="axios"></a>
 
 **axios**
 
@@ -1146,133 +838,9 @@ async function postTasksFetch () {
 }
 ```
 
-## Class
-
-[class extends React.Component](https://github.com/Dvachee/SocialNetworkReact/commit/8c264525183ab242eed19b8c017d62010e2addb9)
-
-**Что такое класс? Что такое конструктор? Что это за слово такое new?**
-
-Для начала давайте вспомним ООП. А именно контекст вызова **this**. Это слово говорит о том, с чьего имени будет вызываться свойство или метод в объекте. 
-
-создадим функцию
-
-```javascript
-function Man2(name, age) {
-  this.name = name;
-  this.age = age;
-}
-```
-
-На что указывает this внутри функции? Ни на что... Пока её не вызвать
-
-```javascript
-Man2('Dimon', 8)
-```
-
-Если просто вызвать данную функцию, то контекстом вызова вызова будет являться глобальный объект window
-
-Это легко можно проверить в консоли браузера после вызова данной функции
-
-![1565187371752](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565187371752.png)
-
-Т.е теперь наши name и age - это новые ключи объекта window, а их значения - это параметры функции Man2
-
-Пришло время воспользоваться словом new
-
-создадим переменную и приравняем её вызову функции Man2 напечатав изначально слово new
-
-```javascript
-let m3 = new Man2('Dima', 31);
-```
-
-![1565187623311](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565187623311.png)
-
-И мы видим что в консоль вывелся **ОБЪЕКТ** с **КЛАССОМ** Man2
-
-В sources это выглядит так
-
-![1565187882877](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565187882877.png)
-
-Если бы мы создали этот объект через литерал объекта, то мы бы увидели такую картину
-
-![1565187791164](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565187791164.png)
-
-А в sources было бы написано object
-
-![1565187836760](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565187836760.png)
-
-Используя слово new можно создавать неограниченное количество **ЭКЗЕМПЛЯРОВ** класса **Man2**
-
-Прошу заметить что в данном случае контекстом вызова является переменная к которой мы приравниваем функцию с помощью **new**
-
-#### Классы в *JavaScript* были введены в ECMAScript 2015
-
-Давайте проделаем аналогичные действия с помощью классов
-
-```javascript
-class Man2 {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-  }
-}
-```
-
-Первое что мы видим что мы видим это то, что в роли нашей функции Man2 играет встроенный метод constructor. Теперь мы знаем как это называется, конструктор. Мы собирали конструктор. 
-
-Man2 же ушло немного выше и говорит само за себя, теперь это class.
-
-Ниже конструктора нужно писать все свои методы для работы с данными, которые мы ввели в конструктор
-
-Вот пример кода
-
-```javascript
-class Man {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.people = [
-      {name: 'Dima', age: 18},
-      {name: 'Julia', age: 19}
-    ];
-    this.Manelement = this.people.map(m => {
-      const man = document.createElement('li');
-      man.innerHTML = m.name;
-      document.querySelector('#resultTask').appendChild(man)
-    })
-  }
-
-  render() {
-    return this.Manelement
-  }
-}
-```
-
-Мы создали метод render который возвращает Manelement
-
-Чтобы начать им пользоваться, нужно проделать все те же шаги
-
-```javascript
-let m1 = new Man('Dima', 31)
-```
-
-Теперь от имени m1 можно вызвать метод render
-
-```javascript
-m1.render();
-```
-
-Вот и всё.
-
-Для чего нам нужны классы в React'е? А для того, чтобы сохранять чистоту функциональных компонент. Чистая функциональная компонента должна только принимать данные и возвращать ИХ ЖЕ. Она не должна делать запросы на сервер, не должна делать ничего кроме как возвращать **JSX разметку**
-
-В этом нам и помогает классовая компонента
+<a name="with_router"></a>
 
 ## withRouter
-
-Давайте попробуем разобраться с функцией withRouter, понять как она работает и для чего.
-
-Сначала в коде:
 
 UserItem.jsx
 
@@ -1396,15 +964,7 @@ let withRouterProfileContainer = withRouter(ProfileContainer);
 export default connect(mapStateToProps, mapDispatchToProps)(withRouterProfileContainer);
 ```
 
-Давайте вспомним для чего нужна функция connect. Она принимает в качестве параметров данные из state и action creator, чтобы задиспатчить их в reducer. Осуществляет она это с помощью функций, которые возвращают объект, либо же в случае с dispatch можно использовать готовый объект созданный с помощью литерала объекта. Ибо connect может сам dispatch-ить данные.
-
-В компоненту данные и actioncreators приходят в виде props
-
-connect на выходе выбрасывает новую компоненту
-
-**Ну так вот**. 
-
-Функция withRouter очень похожа на connect. Отличие в том, что connect имеет связь со store, а withRouter имеет связь с url данными.
+**withRouter** очень похожа на connect. Отличие в том, что connect имеет связь со store, а withRouter имеет связь с url данными.
 
 withRouter принимает в качестве только компоненту, и выбрасывает новую.
 
@@ -1470,28 +1030,6 @@ componentDidMount() {
       })
   }
 ```
-
-**Вот и всё!)**
-
-![1565524485562](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565524485562.png)
-
-## Архитектурный паттерн нашего приложения в одной картинке
-
-Начало:  2 уровня. UI - User Interface. BLL - business logic layer.
-
-![1565949602035](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565949602035.png)
-
-![1565949713701](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565949713701.png)
-
-Эволюция - 3 уровня.UI - User Interface. BLL - business logic layer. DAL - data access layer
-
-![1565949848685](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565949848685.png)
-
-Эволюция vol 2.0. Разгрузка UI уровня
-
-![1565950092440](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565950092440.png)
-
-![1565951914995](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1565951914995.png)
 
 <a name="redux_thunk"></a>
 
@@ -1584,6 +1122,8 @@ window.store = store;
 
 Теперь при попадании thunk в store - store будет знать, что такое thunk. Это функция, а не привычный ему action(объект) и просто вызовет её, передав ей в качестве параметра метод dispatch.
 
+<a name="redirect"></a>
+
 ## Redirect
 
 Redirect - это стандартная компонента React-router-dom. Она используется (как ни странно) для редиректа.
@@ -1623,6 +1163,8 @@ let initialState = {
 ```
 
 И должно быть указано то, что мы собираемся отрендерить.
+
+<a name="hoc"></a>
 
 ## HOC - High Order Component
 
@@ -1703,92 +1245,12 @@ export default compose(
 
 Функция вызывает дважды. Принцип такой же, как с функцией connect. Идём снизу - вверх. Изначально берём ProfileContainer и передаём её в качестве параметра функции withAuthRedirect. Она вызывается и возвращает компоненту. Далее - передаём эту компоненту в качестве параметра функции withRouter. Она вызывается и возвращает очередную новую компоненту. Передаём эту компоненту в качестве второго параметра функции connect(mapStateToProps, mapDispatchToProps). Она вызывается и возвращает **НОВУЮ** компоненту. Она же (наконец-то) и идёт на экспорт по дефолту.
 
-Теперь мы можем легко вклиниваться в этот конвейерный ад. 
-
-## componentDidUpdate
-
-**componentDidUpdate** - это метод жизненного цикла компоненты. 
-
-**Сейчас важно вспомнить, что эти методы react вызывает сам, но каждый в разное время и при разных условиях.*
-
-componentDidUpdate вызывается сразу же после обновления компоненты. Что мы понимаем под этим обновлением? Это либо:
-
-- В компоненту пришли новые пропсы
-- В компоненте изменился local state
-
-Данному методу приходят 2 параметра(на самом деле может и 3, но это исключение) это
-
-prevProps - старые пропсы, пропсы **до** обновления
-
-prevState - старый state.
-
-**Давайте разберёмся на практике.** 
-
-У нас есть компонента профиля пользователя. При переходе на неё мы отправляем 2 асинхронных запроса на сервер. Первый - для получения основных данных пользователя, Второй - для получения только статуса пользователя. Т.к они асинхронны, то мы не можем знать чей ответ мы получим первее.
-
-```javascript
-this.props.getProfile(userId);
-this.props.getProfileStatus(userId);
-```
-
-Для отображения статуса я использую параграф `<p>`.  На счёт него переживать не стоит. Пропсы в него рано или поздно придут и пользователь это увидит
-
-```javascript
-<p onDoubleClick={ this.activateEditMode }>{this.props.profileStatus ? this.props.profileStatus : 'изменить статус'}</p>
-
-```
-
-Но мы же хотим иметь возможность менять статус, верно? Для этого я использую `<input />`
-
-```javascript
-<input autoFocus={true} 
-onBlur={this.deactivateEditMode} 
-type="text" 
-value={this.state.status}
-onChange={this.onStatusChange}/>
-```
-
-value для него берётся из локального state, который в свою очередь берёт данные из пропсов (статус из bll). Так вот, давайте посмотрим что может пойти не так.
-
-1) Переходим на страницу профиля
-
-2) Отправляются 2 запроса на сервер.
-
-3) Так получилось что запрос на получения данных о профиле пришёл **РАНЬШЕ**.
-
-4) Отрисовывается компонента за счёт полученных данных.
-
-5) `<p>` остаётся пустым (или же просто заглушкой), в локальный state ничего не приходит, значит `<input />` неоткуда брать данные, он также остаётся пустым.
-
-6) Приходят данные по второму запросу(статуса)
-
-7) В `<p>` приходят пропсы и отрисовывается статус.
-
-8) В локальный state приходят данные, **НО** `<input />` уже отрисовался, а значит он не будет вновь брать данные из локального state, он так и останется пустым.
-
-**Как данная проблемы решается:**
-
-```javascript
-componentDidUpdate(prevProps, prevState) {
-    if (prevProps.profileStatus !== this.props.profileStatus) {
-      this.setState({
-        status: this.props.profileStatus
-      })
-    }
-  }
-```
-
-Этот метод вызовется на **6** шагу. Он как-бы говорит "ага, до этого в пропсах не было статуса, а теперь пришли новые пропсы, и здесь этот статус есть, значит изменю ка я локальный state методом setState, а уже данный метод вызовет новую перерисовку методом render"
-
-После перерисовки локальный state сразу будет иметь статус из пропсов, значит `<input />` сможет их оттуда взять.
+<a name="redux_form"></a>
 
 ## Redux-Form
 
-Помните как мы воплощали в жизнь FLUX круговорот при каждом нажатии на кнопку на клавиатуре? Помните все эти onChange и onClick? Это очень круто. Правда, благодаря этому мы понимаем суть данной архитектуры.
-
-Мы это делали для разнообразных форм, в которые мы вводили текст. А если этих форм на сайте у нас будет 10?...30?...100? Неужели будет весело копировать один и тот же текст? Засорять глобальный state всеми флажками и временными значениями? НЕТ! Не нужно создавать велосипед, он уже давно создан до нас. Нам остаётся только брать и пользоваться!
-
-Redux-Form это библиотека, которая берёт на себя все обязанности по FLUX круговороту, все формы будут обрабатываться ОДНИМ reducer'ом, созданным данной библиотекой.
+Redux-Form это библиотека, которая берёт на себя все обязанности по FLUX круговороту. 
+Все формы будут обрабатываться ОДНИМ reducer'ом, созданным данной библиотекой.
 
 Давайте по пунктам:
 
@@ -2051,7 +1513,9 @@ export const Input = (props) => {
 }
 ```
 
-#### Композиция, что это и зачем.
+<a name="composition"></a>
+
+## Композиция, что это и зачем.
 
 Давайте покажу на практическом примере что такое композиция
 
@@ -2109,7 +1573,9 @@ export const Textarea = (props) => {
 
 Композиция необходима, в первую очередь для рефакторинга кода. Дабы избежать повторного кода.
 
-#### Ещё пару слов про деструктуризацию. Что это и с чем едят.
+<a name="destructurization"></a>
+
+## Ещё пару слов про деструктуризацию. Что это и с чем едят.
 
 Она строится на базе rest оператора (...) 
 
@@ -2194,13 +1660,16 @@ log(prop);
 
 ![1567364125842](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/1567364125842.png)
 
-## Reselect
+<a name="reselect"></a>
 
-*P.S Сознаюсь, вот и настал тот момент когда я просто взял информацию с medium. Мне очень понравилось их донесение, поэтому я не придумал ничего лучше, чем оставить их посыл таким, какой он есть.*
+## Reselect
 
 Перед тем, как говорить о библиокете reselect, давайте разберём что такое **селекторы**
 
-**Селекторы** - *это геттеры для состояния редукции. Как и геттеры, селекторы инкапсулируют структуру состояния и могут повторно использоваться. Селекторы также могут вычислять производные свойства.*
+<a name="selector"></a>
+
+**Селекторы** - *это геттеры для состояния редукции. Как и геттеры, селекторы инкапсулируют структуру состояния и могут повторно использоваться.
+Селекторы также могут вычислять производные свойства.*
 
 Пример селектора:
 
@@ -2220,11 +1689,11 @@ const mapStateToProps = (state) => {
 };
 ```
 
-При совместном использовании React и Redux представляют собой потрясающую комбинацию технологий, помогающих нам структурировать приложения с настоящим разделением задач. Даже при том, что React чрезвычайно эффективен из коробки, наступает время, когда требуется еще большая производительность.
-
 Одной из наиболее дорогостоящих операций, которые может выполнять React, является цикл рендеринга. Он запускается, когда компонент обнаруживает изменение входных данных.
 
-Когда мы впервые начинаем работу с React, мы обычно не беспокоимся о том, насколько затратны циклы рендеринга. Но по мере усложнения наших пользовательских интерфейсов нам требуется об этом задумываться. React предлагает нам некоторые инструменты для захвата цикла рендеринга и предотвращения повторной перерисовки, если мы сочтем, что в этом нет необходимости. Для этого мы можем воспользоваться событием жизненного цикла — `componentShouldUpdate`, которое возвращает boolean, отвечающий за то, будет ли компонент обновлен или нет. Это основа `PureRenderMixin`, который сравнивает входящие свойства (props) и состояние (state) с предыдущими свойствами и состоянием и возвращает `false`, если они равны.
+Когда мы впервые начинаем работу с React, мы обычно не беспокоимся о том, насколько затратны циклы рендеринга. Но по мере усложнения наших пользовательских интерфейсов нам требуется об этом задумываться.
+React предлагает нам некоторые инструменты для захвата цикла рендеринга и предотвращения повторной перерисовки, если мы сочтем, что в этом нет необходимости.
+Для этого мы можем воспользоваться событием жизненного цикла — `componentShouldUpdate`, которое возвращает boolean, отвечающий за то, будет ли компонент обновлен или нет. Это основа `PureRenderMixin`, который сравнивает входящие свойства (props) и состояние (state) с предыдущими свойствами и состоянием и возвращает `false`, если они равны.
 
 Это, в сочетании с неизменяемыми наборами данных, дает нам существенное улучшение производительности, поскольку мы можем легко определить, должен ли компонент повторно отрисовываться или нет. К сожалению, и этого не достаточно.
 
@@ -2236,25 +1705,27 @@ const mapStateToProps = (state) => {
 
 Проблема состоит в том, что всякий раз, когда изменяется состояние любого из пунктов (добавляется новый элемент, изменяется количество или изменяется состояние выбора), все нужно будет пересчитать и повторно отрисовать. Вы можете увидеть, как это будет проблематично, если в нашей корзине есть сотни предметов. Изменение процента налога приведет к пересчету позиций в корзине, но не должно. Процент налога — это просто изменение в полученных данных. Только общая сумма и общая сумма налога должны меняться и запускать последующую перерисовку. Давайте посмотрим, как мы можем исправить эти проблемы.
 
-#### Reselect — это библиотека для создания мемоизированных селекторов (memoized selectors). Мы определяем селекторы как функции, извлекающие фрагменты состояния Redux для наших компонентов React. Используя мемоизацию, мы можем предотвратить ненужные перерисовки и пересчеты полученных данных, что, в свою очередь, ускорит наше приложение.
+## Reselect — это библиотека для создания мемоизированных селекторов (memoized selectors). Мы определяем селекторы как функции, извлекающие фрагменты состояния Redux для наших компонентов React. Используя мемоизацию, мы можем предотвратить ненужные перерисовки и пересчеты полученных данных, что, в свою очередь, ускорит наше приложение.
 
-Если бы у нас было несколько сотен или тысяч вещей, перерисовка всех предметов в нашей корзине была бы дорогостоящей, даже если бы менялся только процент налога. А если бы мы реализовали поиск? Должны ли мы повторно пересчитывать все элементы и налоги каждый раз, когда пользователь ищет что-то в корзине? Мы можем предотвратить эти дорогостоящие операции, перемещая их использование в мемоизированные селекторы. При использовании мемоизированных селекторов, если дерево состояний велико, нам не нужно беспокоиться о том, что дорогие вычисления выполняются каждый раз при изменении состояния. Мы также можем добавить дополнительную гибкость для нашего интерфейса, разбив их на отдельные компоненты.
+При использовании мемоизированных селекторов, если дерево состояний велико, нам не нужно беспокоиться о том, что дорогие вычисления выполняются каждый раз при изменении состояния. Мы также можем добавить дополнительную гибкость для нашего интерфейса, разбив их на отдельные компоненты.
 
 Давайте посмотрим на простой селектор, используя Reselect:
 
 ![444444444](https://github.com/Dvachee/SocialNetworkReact/raw/master/README-IMG/0_SSDchB03yEUDUYHg_.png)
 
-В приведенном выше примере, мы разбили нашу функцию поиска товаров в корзине на две функции. Первая функция (строка 3) просто получит все элементы в корзине, а вторая функция является мемоизированным селектором. Reselect предоставляет `createSelector`API, позволяющий нам создать мемоизированный селектор. Это означает, что `getItemsWithTotals` будет вычисляться при первом запуске функции. Если эта же функция вызывается снова, но входные данные (результат `getItems`) не изменились, функция просто вернет кешированный расчет элементов и их итогов. Если элементы изменены (например, добавлен элемент, изменилось количество, любые манипуляции с результатом `getItems`), функция снова будет выполнена.
+В приведенном выше примере, мы разбили нашу функцию поиска товаров в корзине на две функции. Первая функция (строка 3) просто получит все элементы в корзине, а вторая функция является мемоизированным селектором.
+Reselect предоставляет `createSelector`API, позволяющий нам создать мемоизированный селектор. Это означает, что `getItemsWithTotals` будет вычисляться при первом запуске функции.
+Если эта же функция вызывается снова, но входные данные (результат `getItems`) не изменились, функция просто вернет кешированный расчет элементов и их итогов. Если элементы изменены (например, добавлен элемент, изменилось количество, любые манипуляции с результатом `getItems`), функция снова будет выполнена.
 
 Это мощная концепция, позволяющая нам полностью оптимизировать те компоненты, которые должны быть перерисованы, и когда их производное состояние должно быть пересчитано. Это означает, что нам больше не нужно беспокоиться о `getItems`: общая стоимость каждого элемента начинает рассчитываться, когда операции не зависят от изменений состояния.
 
-
-
-
+<a name="dom"></a>
 
 ## DOM
 
-**DOM - Document Object Model. Объектная модель документа.** **Создание для каждого тега на странице отдельного объекта**
+**DOM - Document Object Model. Объектная модель документа.**
+
+**Создание для каждого тега на странице отдельного объекта**
 
 **VirtualDom. Он нужен для того, чтобы создавать виртуальную версию DOM и сравнивать её с настоящим DOM для дальнейшей ТОЧЕЧНОЙ замены объекта.** 
 
@@ -2280,19 +1751,11 @@ items.map( e => {
 
 Отрисовка коллекции элементов из массива. Дело в том, что если мы попытаемся изменить хотя бы один элемент в массиве, то Да, страница перерисуется. Но нативному js абсолютно плевать ЧТО-Именно изменилось и он перерисует страницу ПОЛНОСТЬЮ. Т.е перерисовка на каждое действие. На каждую манипуляцию с DOM деревом. Это очень дорого и неоптимизированно.
 
+<a name="babel"></a>
 
-
-**Тут нам и помогает VirtualDOM. А именно процесс Reconciliation. Согласование на русском.**
-
-Что такое компонента? Компонента -  это функция или класс, который принимает пропсы и возвращает jsx разметку. Так то оно так, но дело в том, что браузер не знает что такое jsx. Больше скажу, очень часто он не знает обычного js нового стандарта. Всё это конечно зависит от браузера. Если в самые трендовые браузеры, такие как хром или firefox постоянно добавляют поддержку новых фич. То такие браузеры как IE или Safari способны переваривать только код, который был актуален несколько лет назад. Для решения проблем несовместимости был создан Babel.
+## Babel
 
 **Babel - это js компилятор, который в основном используется для преобразования кода ECMAScript 2015+ в обратно совместимую версию JavaScript, которая может быть запущена более старыми механизмами JavaScript.** 
-
-Его работу можно увидеть своими глазами введи в гугле babel online
-
-
-
-Ну к чему это я. Babel также нужен для компиляции jsx разметки в обычный js код.
 
 Вам напоминает что-нибудь эта строчка?
 
@@ -2310,11 +1773,13 @@ React.createElement("div");
 
 Так же, теперь мы понимаем зачем импортировать React в каждый файл, где есть компонента. Всё потому, что мы создаём элемент от лица React. Что позволяет нам создавать его в VirtualDom.
 
-##### Reconciliation
+<a name="reconciliation"></a>
 
-Это процесс сравнения объектом VirtualDom с объектами DOM и замена изменившихся элементов. Это позволяет нам не перерисовывать компоненту полностью, а точечно изменять объекты. 
+### Reconciliation
 
-Именно для этого мы и должны использовать key. Чтобы реакт при сравнении элементов смотрел на их уникальные ключи и перерисовывал всё правильно.
+Это процесс сравнения объектом VirtualDom с объектами DOM и замена изменившихся элементов. Это позволяет не перерисовывать компоненту полностью, а точечно изменять объекты. 
+
+Именно для этого и должны использовать key. Чтобы реакт при сравнении элементов смотрел на их уникальные ключи и перерисовывал всё правильно.
 
 
 <a name="pure_function"></a>
