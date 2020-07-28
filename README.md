@@ -1,7 +1,10 @@
--[React](#react)
--[Pure Function](#pure_function) 
--[Redux Thunk](#redux_thunk)
+* [React](#react)
+* [Component](#component)
 
+
+
+* [Redux Thunk](#redux_thunk)
+* [Pure Function](#pure_function) 
 
 <a name="react"></a>
 
@@ -14,12 +17,14 @@
 в некоторых моментах я писал вещи понятные только
 мне.
 
+<a name="component"></a>
+
 ## Компонента
 
 **Компонента** - это функция, которая возвращает JSX разметку. Т.е HTML внутри JS.
 Компоненту никогда не вызывают, Компонента - это ТЕГ.
 
-
+<a name="component"></a>
 
 ## SPA
 
